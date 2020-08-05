@@ -1,0 +1,14 @@
+{% extends "student_portals/base.html" %}
+
+{% block content %}
+  <p><a href="{% url 'student_portals:topic' topic.id %}">{{ topic }}</a></p>
+
+  <p>Add a new entry:</p>
+
+  <form action="{% url 'student_portals:new_entry' topic.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Add entry</button>
+  </form>
+
+{% endblock content %}

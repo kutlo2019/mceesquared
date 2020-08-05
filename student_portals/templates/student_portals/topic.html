@@ -1,0 +1,32 @@
+{% extends "student_portals/base.html" %}
+
+{% block page_header %}
+  <h3>{{ topic }}</h3>
+  <p>
+    <a href="{% url 'student_portals:edit_topic' topic.id %}">Edit topic</a>
+  </p>
+{% endblock page_header %}
+
+{% block content %}
+  <p>
+    <a href="{% url 'student_portals:new_entry' topic.id %}">Add a new entry</a>
+  </p>
+  <ul>
+  {% for entry in entries %}
+    <div class="card mb-3">
+      <h4 class="card-header">
+        {{ entry.date_added|date:'M d, Y H:i' }}
+        <small><a href="{% url 'student_portals:edit_entry' entry.id %}">
+          edit entry
+        </a></small>
+      </h4>
+      <div>
+        {{ entry.text|linebreaks }}
+      </div>
+    </div>
+  {% empty %}
+    <p>There are no entries for this topic yet.</p>
+  {% endfor %}
+  </ul>
+
+{% endblock content %}
