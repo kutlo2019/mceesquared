@@ -1,22 +1,26 @@
 {% extends "student_portals/base.html" %}
 
 {% block page_header %}
- <h1>Topics</h1>
+<div class="card mb-3">
+  <h1>Topics</h1>
+</div>
 {% endblock page_header %}
 
 {% block content %}
-  <p>Topics</p>
+  <div class="card mb-3">
+    <ul>
+      {% for topic in topics %}
+        <li><h4>
+          <div class="card mb-3">
+            <a href="{% url 'student_portals:topic' topic.id %}">{{ topic }}</a>
+          </div>
+        </h4></li>
+      {% empty %}
+        <li><h4>No topics have been added yet.</h4></li>
+      {% endfor %}
+    </ul>
 
-  <ul>
-  	{% for topic in topics %}
-  	  <li><h3>
-  	  	<a href="{% url 'student_portals:topic' topic.id %}">{{ topic }}</a>
-  	  </h3></li>
-  	{% empty %}
-  	  <li><h3>No topics have been added yet.</h3></li>
-  	{% endfor %}
-  </ul>
-
-  <h3><a href="{% url 'student_portals:new_topic' %}">Add a new topic</a></h3>
+    <h4><a href="{% url 'student_portals:new_topic' %}">Add a new topic</a></h4>
+  </div>
 
 {% endblock content %}

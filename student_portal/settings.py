@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My apps
     'student_portals',
-    'users',
+    'account',
 
     # Third part apps.
     'bootstrap4',
@@ -74,6 +74,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'account.Account'
 
 WSGI_APPLICATION = 'student_portal.wsgi.application'
 
