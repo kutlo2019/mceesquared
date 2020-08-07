@@ -3,6 +3,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class MyAccountManager(BaseUserManager):
 	def create_user(self, email, username, password=None):
+		"""
+		Creates and saves an account with the given email, password
+		and username
+		"""
 		if not email:
 			raise ValueError('Users must have an email address')
 		if not username:
@@ -17,11 +21,13 @@ class MyAccountManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
-	def create_superuser(self, email, username, password):
+	def create_superuser(self, email, password):
+		"""
+		Creates and saves a superuser with the given email and password
+		"""
 		user = self.create_user(
 			email=self.normalize_email(email),
 			password=password,
-			username=username,
 		)
 		user.is_admin = True
 		user.is_staff = True
@@ -47,7 +53,7 @@ class Account(AbstractBaseUser):
 
 	def __str__(self):
 		return self.email 
-		
+
 	# For checking permissions. to keep it simple all admin have ALL permissons
 	def has_perm(self, perm, obj=None):
 		return self.is_admin

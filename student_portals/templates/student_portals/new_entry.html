@@ -1,14 +1,20 @@
 {% extends "student_portals/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+  <h2><a href="{% url 'student_portals:topic' topic.id %}">{{ topic }}</a></h2>
+{% endblock page_header %}
+
 
 {% block content %}
-  <p><a href="{% url 'student_portals:topic' topic.id %}">{{ topic }}</a></p>
-
   <p>Add a new entry:</p>
 
   <form action="{% url 'student_portals:new_entry' topic.id %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button name="submit">Add entry</button>
+    {% bootstrap_form form %}
+  	{% buttons %}
+      <button name="submit" class="btn btn-primary">Add Entry</button>
+    {% endbuttons %}
   </form>
 
 {% endblock content %}
