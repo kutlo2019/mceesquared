@@ -28,7 +28,7 @@ class EditProfileForm(forms.ModelForm):
 
 	def clean_username(self):
 		if self.is_valid():
-			email = self.cleaned_data['username']
+			username = self.cleaned_data['username']
 			try:
 				account = Account.objects.exclude(pk=self.instance.pk).get(username=username)
 			except Account.DoesNotExist:

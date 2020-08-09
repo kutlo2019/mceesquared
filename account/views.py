@@ -37,7 +37,7 @@ def edit_profile(request):
 	context = {}
 
 	if request.method =='POST':
-		form = EditProfileForm(request.POST, instance=request.user)
+		form = EditProfileForm(data=request.POST, instance=request.user)
 		if form.is_valid():
 			form.save()
 			return redirect('student_portals:index')
