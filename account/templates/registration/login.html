@@ -2,19 +2,31 @@
 {% load bootstrap4 %}
 
 {% block page_header %}
-  <h2>Log into your account.</h2>
+  <h2>Login</h2>
 {% endblock page_header %}
 
 {% block content %}
-  <form method="post" action="{% url 'account:login' %}" class="form">
-  	{% csrf_token %}
-    {% bootstrap_form form %}
-  	{% buttons %}
-      <button name="submit" class="btn btn-primary">Log in</button>
-    {% endbuttons %}
 
-  	<input type="hidden" name="next"
-  	  value="{% url 'student_portals:index' %}" />
+  <form method="post" action="{% url 'account:login' %}">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{field.label_tag}}
+        {{field}}
+
+        {% if field.help_text %}
+          <small style="color: grey">{{field.help_text}}</small>
+        {% endif %}
+
+        {% for error in field.errors %}
+          <small style="color: red">{{error}}</small>
+        {% endfor %}
+      </p>
+    {% endfor%}
+    {% buttons %}
+      <button type="submit" name="submit" class="btn btn-primary">Login</button>
+    {% endbuttons %}
+    <input type="hidden" name="next" value="{% url 'student_portals:index' %}" />
   </form>
 
 {% endblock content %}

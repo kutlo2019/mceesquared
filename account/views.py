@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login, authenticate
 
-from account.forms import RegistrationForm
+from account.forms import RegistrationForm, EditProfileForm
 from .admin import UserCreationForm
 
 user = get_user_model().objects.filter()
@@ -28,3 +28,26 @@ def register(request):
 	# Display a blank or invalid form.
 	context = {'form': form}
 	return render(request, 'registration/register.html', context)
+
+def edit_profile(request):
+
+	if not request.user.is_authenticated:
+		return redirect("account:login")
+
+	context = {}
+
+	if request.method =='POST':
+		form = EditProfileForm(request.POST, instance=request.user)
+		if form.is_valid():
+			form.save()
+			return redirect('student_portals:index')
+
+	else:
+		form = EditProfileForm(
+				initial = {
+					"email": request.user.email,
+					"username": request.user.username,
+				}
+			)
+	context = {'form': form}
+	return render(request, 'account/edit_profile.html', context)
