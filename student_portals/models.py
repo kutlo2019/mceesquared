@@ -1,11 +1,11 @@
 from django.db import models
-from account.models import Account
+from account.models import StudentAccount
 
 class Topic(models.Model):
 	"""A topic the user wants to note down."""
 	text = models.CharField(max_length=200) # Set the number maximum of words to 200
 	date_added = models.DateTimeField(auto_now_add=True)
-	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+	owner = models.ForeignKey(StudentAccount, on_delete=models.CASCADE)
 
 	def __str__(self):
 	 	"""Return a string representation of the model."""	
@@ -28,7 +28,7 @@ class MathematicsAssignmentGrades(models.Model):
 	"""The weekly Assignment grades to be recorderd."""
 	math_mark = models.DecimalField(max_digits=3, decimal_places=2)
 	date_added = models.DateTimeField(auto_now_add=True)
-	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+	#owner = models.ForeignKey(StudentAccount, on_delete=models.CASCADE)
 
 	def __str__(self):
 		"""Return a decimal representation of the model."""
@@ -38,7 +38,7 @@ class PhysicsAssignmentGrades(models.Model):
 	"""The weekly Assignment grades to be recorderd."""
 	physics_mark = models.DecimalField(max_digits=3, decimal_places=2)
 	date_added = models.DateTimeField(auto_now_add=True)
-	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+	#owner = models.ForeignKey(StudentAccount, on_delete=models.CASCADE)
 
 	def __str__(self):
 		"""Return a decimal representation of the model."""
@@ -48,7 +48,7 @@ class ChemistryAssignmentGrades(models.Model):
 	"""The weekly Assignment grades to be recorderd."""
 	chemistry_mark = models.DecimalField(max_digits=3, decimal_places=2)
 	date_added = models.DateTimeField(auto_now_add=True)
-	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+	#owner = models.ForeignKey(StudentAccount, on_delete=models.CASCADE)
 
 	def __str__(self):
 		"""Return a decimal representation of the model."""
@@ -58,7 +58,7 @@ class BiologyAssignmentGrades(models.Model):
 	"""The weekly Assignment grades to be recorderd."""
 	biology_mark = models.DecimalField(max_digits=3, decimal_places=2)
 	date_added = models.DateTimeField(auto_now_add=True)
-	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+	#owner = models.ForeignKey(StudentAccount, on_delete=models.CASCADE)
 
 	def __str__(self):
 		"""Return a decimal representation of the model."""

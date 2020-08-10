@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class MyAccountManager(BaseUserManager):
-	def create_user(self, email, username, password=None):
+	def create_user(self, email, username, date_of_birth, password=None):
 		"""
 		Creates and saves an account with the given email, password
 		and username
@@ -15,6 +15,7 @@ class MyAccountManager(BaseUserManager):
 		user = self.model(
 			email=self.normalize_email(email),
 			username=username,
+			date_of_birth=date_of_birth,
 		)
 
 		user.set_password(password)
@@ -35,21 +36,21 @@ class MyAccountManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
-class Account(AbstractBaseUser):
-	email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
+class StudentAccount(AbstractBaseUser):
+	email 					= models.EmailField(verbose_name="email", max_length=200, unique=True)
 	username				= models.CharField(max_length=30, unique=True)
 	date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+	date_of_birth			= models.DateField()
 	last_login				= models.DateTimeField(verbose_name='last login', auto_now=True)
 	is_admin				= models.BooleanField(default=False)
 	is_active				= models.BooleanField(default=True)
 	is_staff				= models.BooleanField(default=False)
 	is_superuser			= models.BooleanField(default=False)
 
+	objects = MyAccountManager()
 
 	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = ['username', ]
-
-	objects = MyAccountManager()
+	REQUIRED_FIELDS = ['username', 'date_of_birth' ]
 
 	def __str__(self):
 		return self.email 
