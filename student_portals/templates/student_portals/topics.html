@@ -16,11 +16,11 @@
           </div>
         </h4></li>
       {% empty %}
-        <li><h4>No topics have been added yet.</h4></li>
+        <li><h4>Nothing to discuss yet.</h4></li>
       {% endfor %}
     </ul>
 
-    <h4><a href="{% url 'student_portals:new_topic' %}">Add a new topic</a></h4>
+    <h4><a href="{% url 'student_portals:new_topic' %}">Add a new discussion</a></h4>
   </div>
 
 {% endblock content %}

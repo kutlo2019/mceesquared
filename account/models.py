@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.utils.translation import gettext_lazy as _
 
 class MyAccountManager(BaseUserManager):
 	def create_user(self, email, username, password=None):
@@ -36,6 +37,13 @@ class MyAccountManager(BaseUserManager):
 		return user
 
 class Account(AbstractBaseUser):
+
+	class Types(models.TextChoices):
+		STUDENT = "STUDENT", "Student"
+		TUTOR = "TUTOR", "Tutor"
+
+	type = models.CharField(_('Type'), max_length=50, choices=Types.choices, default=Types.STUDENT)
+
 	email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
 	username				= models.CharField(max_length=30, unique=True)
 	date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
@@ -61,3 +69,36 @@ class Account(AbstractBaseUser):
 	# Does this user have permission to view this app? (ALWAYS YES FOR SIMPLICITY)
 	def has_module_perms(self, app_label):
 		return True
+
+class StudentManager(models.Manager):
+	def get_query_set(self, *args, **kwargs):
+		return super().get_query_set(*args, **kwargs).filter(type=Account.Types.STUDENT)
+
+class TutorManager(models.Manager):
+	def get_query_set(self, *args, **kwargs):
+		return super().get_query_set(*args, **kwargs).filter(type=Account.Types.TUTOR)
+
+class Student(Account):
+	"""docstring for Student"""
+	objects = StudentManager()
+
+	class Meta:
+		proxy = True
+
+	def save(self, *args, **kwargs):
+		if not self.pk:
+			self.type = Account.Types.STUDENT
+		return super().save(*args, **kwargs)
+
+class Tutor(Account):
+	"""docstring for Student"""
+	objects = TutorManager()
+
+	class Meta:
+		proxy = True
+
+	#is_staff				= models.BooleanField(default=True)
+	def save(self, *args, **kwargs):
+		if not self.pk:
+			self.type = Account.Types.STUDENT
+		return super().save(*args, **kwargs)
