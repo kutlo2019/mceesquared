@@ -1,0 +1,23 @@
+{% extends "student_portals/base.html" %}
+
+{% block page_header %}
+  <h3>Physics Grades</h3>
+{% endblock page_header %}
+
+{% block content %}
+  <ul>
+  {% for grade in grades %}
+    <div class="card mb-3">
+      <h4 class="card-header">
+        {{ grade.date_added|date:'M d, Y H:i' }}
+      </h4>
+      <div>
+        {{ grade }}
+      </div>
+    </div>
+  {% empty %}
+    <p>There are no Physics grades yet.</p>
+  {% endfor %}
+  </ul>
+
+{% endblock content %}

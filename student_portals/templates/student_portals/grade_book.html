@@ -1,0 +1,28 @@
+{% extends "student_portals/base.html" %}
+
+{% block page_header %}
+<div >
+  <h1>Grade Book</h1>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+  <div >
+  	<a href="{% url 'student_portals:mathematics_grades' %}">Mathematics Grades</a>
+  </div>
+  <div >
+  	<a href="{% url 'student_portals:physics_grades' %}">Physics Grades</a>
+  </div>
+  <div >
+  	<a href="{% url 'student_portals:chemistry_grades' %}">Chemistry Grades</a>
+  </div>
+  <div >
+  	<a href="{% url 'student_portals:biology_grades' %}">Biology Grades</a>
+  </div>
+  <div >
+  	<a href="{% url 'student_portals:class_grades' %}">Class Grades</a>
+  </div>
+  <div >
+  	<p>Test Grades</p>
+  </div>
+{% endblock content %}
