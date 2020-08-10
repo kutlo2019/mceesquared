@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
-from .models import Topic, Entry
+from .models import Topic, Entry, MathematicsAssignmentGrades
 from .forms import TopicForm, EntryForm
 
 def check_topic_owner(topic, request):
@@ -110,3 +110,46 @@ def edit_entry(request, entry_id):
 
 	context = {'entry': entry, 'topic': topic, 'form': form}
 	return render(request, 'student_portals/edit_entry.html', context)
+
+@login_required
+def grade_book(request):
+	"""Access student grades"""
+	return render(request, 'student_portals/grade_book.html')
+
+@login_required
+def assignment_submission(request):
+	"""Submit assignment."""
+	return render(request, 'student_portals/assignment_submission.html')
+
+@login_required
+def class_grades(request):
+	"""Submit assignment."""
+	return render(request, 'student_portals/class_grades.html')
+
+@login_required
+def mathematics_grades(request):
+	"""Show all Mathematics grades."""
+	grades = MathematicsAssignmentGrades.objects.filter(owner=request.user).order_by('date_added')
+	context = {'grades': grades}
+	return render(request, 'student_portals/mathematics_grades.html', context)
+
+@login_required
+def physics_grades(request):
+	"""Show all Mathematics grades."""
+	grades = MathematicsAssignmentGrades.objects.filter(owner=request.user).order_by('date_added')
+	context = {'grades': grades}
+	return render(request, 'student_portals/physics_grades.html', context)
+
+@login_required
+def chemistry_grades(request):
+	"""Show all Mathematics grades."""
+	grades = MathematicsAssignmentGrades.objects.filter(owner=request.user).order_by('date_added')
+	context = {'grades': grades}
+	return render(request, 'student_portals/chemistry_grades.html', context)
+
+@login_required
+def biology_grades(request):
+	"""Show all Mathematics grades."""
+	grades = MathematicsAssignmentGrades.objects.filter(owner=request.user).order_by('date_added')
+	context = {'grades': grades}
+	return render(request, 'student_portals/biology_grades.html', context)

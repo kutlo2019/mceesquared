@@ -23,3 +23,43 @@ class Entry(models.Model):
 	def __str__(self):
 		"""Return a string representation of the model."""
 		return f"{self.text[:50]}..."
+
+class MathematicsAssignmentGrades(models.Model):
+	"""The weekly Assignment grades to be recorderd."""
+	math_mark = models.DecimalField(max_digits=3, decimal_places=2)
+	date_added = models.DateTimeField(auto_now_add=True)
+	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+	def __str__(self):
+		"""Return a decimal representation of the model."""
+		return self,math_mark
+
+class PhysicsAssignmentGrades(models.Model):
+	"""The weekly Assignment grades to be recorderd."""
+	physics_mark = models.DecimalField(max_digits=3, decimal_places=2)
+	date_added = models.DateTimeField(auto_now_add=True)
+	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+	def __str__(self):
+		"""Return a decimal representation of the model."""
+		return self,math_mark
+
+class ChemistryAssignmentGrades(models.Model):
+	"""The weekly Assignment grades to be recorderd."""
+	chemistry_mark = models.DecimalField(max_digits=3, decimal_places=2)
+	date_added = models.DateTimeField(auto_now_add=True)
+	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+	def __str__(self):
+		"""Return a decimal representation of the model."""
+		return self,math_mark
+
+class BiologyAssignmentGrades(models.Model):
+	"""The weekly Assignment grades to be recorderd."""
+	biology_mark = models.DecimalField(max_digits=3, decimal_places=2)
+	date_added = models.DateTimeField(auto_now_add=True)
+	owner = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+	def __str__(self):
+		"""Return a decimal representation of the model."""
+		return self,math_mark
