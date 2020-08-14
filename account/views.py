@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login, authenticate
 
 from account.forms import RegistrationForm, EditProfileForm
-from .admin import UserCreationForm
 
 user = get_user_model().objects.filter()
 
@@ -18,9 +17,11 @@ def register(request):
 		# Process the completed form
 		form = RegistrationForm(data=request.POST)
 		if form.is_valid():
-			form.save()
+			user = form.save()
 			email = form.cleaned_data.get('email')
 			password = form.cleaned_data.get('password1')
+			user.set_password(password)
+			user.save()
 			user = authenticate( email=email, password=password)
 			login(request, user)
 			return redirect('student_portals:index')
