@@ -30,6 +30,29 @@ def register(request):
 	context = {'form': form}
 	return render(request, 'registration/register.html', context)
 
+def student_register(request):
+	"""Register as a student"""
+	context = {}
+	if request.method != 'POST':
+		# Display blank registration form
+		form = RegistrationForm()
+	else:
+		# Process the completed form
+		form = RegistrationForm(data=request.POST)
+		if form.is_valid():
+			user = form.save()
+			email = form.cleaned_data.get('email')
+			password = form.cleaned_data.get('password1')
+			user.set_password(password)
+			user.save()
+			user = authenticate( email=email, password=password)
+			login(request, user)
+			return redirect('student_portals:index')
+
+	# Display a blank or invalid form.
+	context = {'form': form}
+	return render(request, 'registration/register.html', context)
+
 def edit_profile(request):
 
 	if not request.user.is_authenticated:
