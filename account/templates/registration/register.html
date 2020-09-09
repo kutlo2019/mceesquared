@@ -2,31 +2,53 @@
 {% load bootstrap4 %}
 
 {% block page_header %}
-  <h2>Register an account with us.</h2>
+  <h2>Register as a Tutor or Student.</h2>
 {% endblock page_header %}
 
 {% block content %}
 
-  <form method="post" action="{% url 'account:register' %}">
-  	{% csrf_token %}
-  	{% for field in form %}
-  	  <p>
-  	  	{{field.label_tag}}
-  	  	{{field}}
+  <head>  
+        <style>  
+            #leftbox { 
+                float:left;  
+                background:Red; 
+                width:25%; 
+                height:280px; 
+            } 
+             
+            #rightbox{ 
+                float:right; 
+                background:blue; 
+                width:25%; 
+                height:280px; 
+            } 
+            h1{ 
+                color:green; 
+                text-align:center; 
+            } 
+        </style>  
+  </head>  
 
-  	  	{% if field.help_text %}
-  	  	  <small style="color: grey">{{field.help_text}}</small>
-  	  	{% endif %}
-
-  	  	{% for error in field.errors %}
-  	  	  <small style="color: red">{{error}}</small>
-  	  	{% endfor %}
-  	  </p>
-  	{% endfor%}
-  	{% buttons %}
-  	  <button type="submit" name="submit" class="btn btn-primary">Register</button>
-  	{% endbuttons %}
-  	<input type="hidden" name="next" value="{% url 'student_portals:index' %}" />
-  </form>
-
+  <body>  
+        <div id = "boxes"> 
+            <h1>
+              <a href="{% url 'account:student_register' %}"></a>
+            </h1> 
+              
+            <div id = "leftbox"> 
+                <h2>
+                  <a href="{% url 'account:tutor_register' %}"></a>
+                </h2> 
+                If you are a tutor register here. Make sure to have your tutor code!
+            </div>  
+              
+            <div id = "rightbox"> 
+                <h2>
+                  <a href="{% url 'account:student_register' %}"></a>
+                </h2> 
+                If you are a student register here. Make sure to have your student code!
+            </div>  
+             
+        </div> 
+  </body>  
 {% endblock content %}

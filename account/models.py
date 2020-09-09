@@ -43,12 +43,28 @@ class Account(AbstractBaseUser):
 		STUDENT = "STUDENT", "Student"
 		TUTOR = "TUTOR", "Tutor"
 
-	type = models.CharField(_('Type'), max_length=50, choices=Types.choices, default=Types.STUDENT)
+	class StudentClass(models.TextChoices):
+		STD1  = '1', "Standard 1"
+		STD2  = '2', "Standard 2"
+		STD3  = '3', "Standard 3"
+		STD4  = '4', "Standard 4"
+		STD5  = '5', "Standard 5"
+		STD6  = '6', "Standard 6"
+		STD7  = '7', "Standard 7"
+		STD8  = '8', "Form 1"
+		STD9  = '9', "Form 2"
+		STD10 = '10', "Form 3"
+		STD11 = '11', "Form 4"
+		STD12 = '12', "Form 5"
+
+	account_type 			= models.CharField(_('Type'), max_length=50, choices=Types.choices, default=Types.STUDENT)
 
 	email 					= models.EmailField(verbose_name="email", max_length=200, unique=True)
 	username				= models.CharField(max_length=30, unique=True)
 	date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
 	date_of_birth			= models.DateField()
+	school_attending		= models.CharField(max_length=100)
+	current_class 			= models.CharField(_('Type'), max_length=50, choices=StudentClass.choices, default=Types.STD1)
 	last_login				= models.DateTimeField(verbose_name='last login', auto_now=True)
 	is_admin				= models.BooleanField(default=False)
 	is_active				= models.BooleanField(default=True)
@@ -58,7 +74,7 @@ class Account(AbstractBaseUser):
 	objects = MyAccountManager()
 
 	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = ['username', 'date_of_birth' ]
+	REQUIRED_FIELDS = ['username', 'date_of_birth', 'account_type' ]
 
 	def __str__(self):
 		return self.email 
@@ -91,9 +107,12 @@ class Student(Account):
 			self.type = Account.Types.STUDENT
 		return super().save(*args, **kwargs)
 
+	REQUIRED_FIELDS = ['username', 'date_of_birth', 'school_attending', 'current_class' ]
+
 class Tutor(Account):
 	"""docstring for Student"""
 	objects = TutorManager()
+	students = models.ManyToManyField(Student)
 
 	class Meta:
 		proxy = True
