@@ -75,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-AUTH_USER_MODEL = 'account.StudentAccount'
+AUTH_USER_MODEL = 'account.Account'
 
 WSGI_APPLICATION = 'student_portal.wsgi.application'
 

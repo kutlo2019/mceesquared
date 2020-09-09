@@ -37,7 +37,6 @@ class MyAccountManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
-<<<<<<< HEAD
 class Account(AbstractBaseUser):
 
 	class Types(models.TextChoices):
@@ -46,11 +45,7 @@ class Account(AbstractBaseUser):
 
 	type = models.CharField(_('Type'), max_length=50, choices=Types.choices, default=Types.STUDENT)
 
-	email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
-=======
-class StudentAccount(AbstractBaseUser):
 	email 					= models.EmailField(verbose_name="email", max_length=200, unique=True)
->>>>>>> 9bc3cdd5d329c3caef0ef707d2b331a1ab034b08
 	username				= models.CharField(max_length=30, unique=True)
 	date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
 	date_of_birth			= models.DateField()
@@ -74,7 +69,6 @@ class StudentAccount(AbstractBaseUser):
 
 	# Does this user have permission to view this app? (ALWAYS YES FOR SIMPLICITY)
 	def has_module_perms(self, app_label):
-<<<<<<< HEAD
 		return True
 
 class StudentManager(models.Manager):
@@ -109,6 +103,4 @@ class Tutor(Account):
 		if not self.pk:
 			self.type = Account.Types.STUDENT
 		return super().save(*args, **kwargs)
-=======
 		return True
->>>>>>> 9bc3cdd5d329c3caef0ef707d2b331a1ab034b08
