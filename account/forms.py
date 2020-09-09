@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashField
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from account.models import StudentAccount
+from account.models import Account
 
 class RegistrationForm(forms.ModelForm):
 	"""Registration form"""
@@ -13,7 +13,7 @@ class RegistrationForm(forms.ModelForm):
 	username = forms.CharField(max_length=60, help_text='Required. Add a valid email username.')
 
 	class Meta:
-		model = StudentAccount
+		model = Account
 		fields = ("email", "username", "date_of_birth", "password1", "password2")
 
 		def clean_password2(self):
@@ -36,15 +36,15 @@ class RegistrationForm(forms.ModelForm):
 class EditProfileForm(forms.ModelForm):
 
 	class Meta:
-		model = StudentAccount
+		model = Account
 		fields = ('email', 'username', 'password', 'date_of_birth')
 
 	def clean_email(self):
 		if self.is_valid():
 			email = self.cleaned_data['email']
 			try:
-				account = StudentAccount.objects.exclude(pk=self.instance.pk).get(email=email)
-			except StudentAccount.DoesNotExist:
+				account = Account.objects.exclude(pk=self.instance.pk).get(email=email)
+			except Account.DoesNotExist:
 				return email
 			raise forms.ValidationError('Email "%s" is already in use.' % account.email)
 
@@ -52,8 +52,8 @@ class EditProfileForm(forms.ModelForm):
 		if self.is_valid():
 			username = self.cleaned_data['username']
 			try:
-				account = StudentAccount.objects.exclude(pk=self.instance.pk).get(username=username)
-			except StudentAccount.DoesNotExist:
+				account = Account.objects.exclude(pk=self.instance.pk).get(username=username)
+			except Account.DoesNotExist:
 				return username
 			raise forms.ValidationError('Username "%s" is already in use.' % account.username)
 
