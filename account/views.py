@@ -43,8 +43,10 @@ def student_register(request):
 			account.save()
 			account.account_type = 'STUDENT'
 			account = authenticate( email=email, password=password)
-			login(request, account.get_user())
-			return redirect('student_portals:index')
+			if account is not None:
+				if account.is_active:
+					login(request, account)
+					return redirect('student_portals:index')
 
 	# Display a blank or invalid form.
 	context = {'form': form}
