@@ -43,7 +43,7 @@ def student_register(request):
 			account.save()
 			account.account_type = 'STUDENT'
 			account = authenticate( email=email, password=password)
-			login(request, account)
+			login(request, account.get_user())
 			return redirect('student_portals:index')
 
 	# Display a blank or invalid form.
