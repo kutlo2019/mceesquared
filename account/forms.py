@@ -9,7 +9,7 @@ class RegistrationForm(forms.ModelForm):
 	"""docstring for RegistrationForm"""
 	class Meta:
 		model = Account
-		fields = ("account_type")
+		fields = ("account_type",)
 	
 
 class TutorRegistrationForm(forms.ModelForm):
@@ -33,8 +33,8 @@ class TutorRegistrationForm(forms.ModelForm):
 
 		def save(self, commit=True):
 			# Save the provided password in hashed format
-			user = super(UserCreationForm, self).save(commit=False)
-			user.set_password(self.cleaned_data["password1"])
+			account = super(UserCreationForm, self).save(commit=False)
+			account.set_password(self.cleaned_data["password1"])
 			if commit:
 				user.save()
 			return user
@@ -48,7 +48,7 @@ class StudentRegistrationForm(TutorRegistrationForm):
 
 	class Meta:
 		model = Account
-		fields = ("email", "username", "date_of_birth", "school_attending", "password1", "password2")
+		fields = ("email", "username", "date_of_birth", "school_attending", "current_class", "password1", "password2")
 
 		def clean_password2(self):
 			# Check that the two password entries match
@@ -60,11 +60,11 @@ class StudentRegistrationForm(TutorRegistrationForm):
 
 		def save(self, commit=True):
 			# Save the provided password in hashed format
-			user = super(UserCreationForm, self).save(commit=False)
-			user.set_password(self.cleaned_data["password1"])
+			account = super(UserCreationForm, self).save(commit=False)
+			account.set_password(self.cleaned_data["password1"])
 			if commit:
-				user.save()
-			return user
+				account.save()
+			return account
 
 
 class EditProfileForm(forms.ModelForm):

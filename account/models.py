@@ -64,7 +64,7 @@ class Account(AbstractBaseUser):
 	date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
 	date_of_birth			= models.DateField()
 	school_attending		= models.CharField(max_length=100)
-	current_class 			= models.CharField(_('Type'), max_length=50, choices=StudentClass.choices, default=Types.STD1)
+	current_class 			= models.CharField(_('Type'), max_length=50, choices=StudentClass.choices)
 	last_login				= models.DateTimeField(verbose_name='last login', auto_now=True)
 	is_admin				= models.BooleanField(default=False)
 	is_active				= models.BooleanField(default=True)
@@ -112,7 +112,7 @@ class Student(Account):
 class Tutor(Account):
 	"""docstring for Student"""
 	objects = TutorManager()
-	students = models.ManyToManyField(Student)
+	#students = models.ManyToManyField(Student)
 
 	class Meta:
 		proxy = True
